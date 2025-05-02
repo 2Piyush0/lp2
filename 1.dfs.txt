@@ -1,0 +1,20 @@
+def dfs(graph,node,visited_dfs):
+    if node not in visited_dfs:
+        print(node,end=", ")
+        visited_dfs.add(node)
+
+        for neighbor in graph[node]:
+            dfs(graph,neighbor,visited_dfs)
+
+if __name__=="__main__":
+    print("Enter the graph as an adjacency list: ")
+    graph_input=input("Graph: ")
+    graph=eval(graph_input)
+
+    start_node=input("Enter the starting node: ")
+
+    print("\nDFS Traversal: ")
+    visited_dfs=set()
+    dfs(graph,start_node,visited_dfs)
+    print()
+
