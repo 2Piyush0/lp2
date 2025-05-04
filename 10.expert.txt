@@ -1,0 +1,46 @@
+class StockExpertSystem:
+    def __init__(self, price_change, volume, market_trend):
+        self.price_change = price_change
+        self.volume = volume
+        self.market_trend = market_trend.lower()
+
+    def get_advice(self):
+        if self.price_change > 5 and self.volume > 100000 and self.market_trend == "bullish":
+            return " Strong Buy: Market is bullish with strong price rise and high volume."
+        elif self.price_change > 2 and self.market_trend == "bullish":
+            return " Buy: Price is increasing in a bullish market."
+        elif self.price_change < -5 and self.market_trend == "bearish":
+            return " Strong Sell: Market is bearish with a sharp decline in price."
+        elif self.price_change < -2 and self.market_trend == "bearish":
+            return " Sell: Price is falling in a bearish market."
+        else:
+            return " Hold: No significant movement detected. Better to wait."
+
+def main():
+    print("\n Welcome to the Stock Market Expert System ")
+
+    while True:
+        try:
+            price_change = float(input("Enter stock price change percentage: "))
+            volume = int(input("Enter trading volume: "))
+            market_trend = input("Enter market trend (bullish/bearish): ").strip().lower()
+
+            if market_trend not in ["bullish", "bearish"]:
+                print("Invalid market trend. Please enter either 'bullish' or 'bearish'.")
+                continue
+
+            system = StockExpertSystem(price_change, volume, market_trend)
+            advice = system.get_advice()
+
+            print("\n Trading Advice:", advice)
+
+            again = input("\nDo you want to check another stock? (yes/no): ").strip().lower()
+            if again != 'yes':
+                print("Thank you for using the expert system. Goodbye!")
+                break
+
+        except ValueError:
+            print(" Please enter numeric values for price change and volume.\n")
+
+if __name__ == "__main__":
+    main()

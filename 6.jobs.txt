@@ -1,0 +1,33 @@
+class Job:
+    def __init__(self,job_id,deadline,profit):
+        self.job_id=job_id
+        self.deadline=deadline
+        self.profit=profit
+
+def job_scheduling(jobs):
+    jobs.sort(key=lambda x: x.profit, reverse=True)
+    max_deadline=max(job.deadline for job in jobs)
+    slots=[False]*max_deadline
+    job_sequence=[None]*max_deadline
+    total_profit=0
+
+    for job in jobs:
+        for i in range(job.deadline-1,-1,-1):
+            if not slots[i]:
+                slots[i]=True
+                job_sequence[i]=job.job_id
+                total_profit+=job.profit
+                break
+    print("\nSchedulin job: ",[job  for job in job_sequence if job])
+    print("Total profit: ",total_profit)
+
+n=int(input("Enter the number of jobs: "))
+jobs=[]
+
+for i in range(n):
+    job_id=input(f"Enter the job id for job {i+1}: ")
+    deadline=int(input(f"Enter the deadline for job {i+1}:"))
+    profit=int(input(f"Enter the profit for job {i+1}: "))
+    jobs.append(Job(job_id,deadline,profit))
+
+job_scheduling(jobs)

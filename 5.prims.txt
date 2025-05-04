@@ -1,0 +1,39 @@
+import heapq
+
+def prim_mst(graph):
+    start_node=next(iter(graph))
+    mst=[]
+    visited=set()
+    min_heap=[(0,start_node,"")]
+
+    while min_heap:
+        cost,node,parent=heapq.heappop(min_heap)
+        if node not in visited:
+            visited.add(node)
+            if parent:
+                mst.append((parent,node,cost))
+
+            for neighbor,weight in graph[node]:
+                if neighbor not in visited:
+                    heapq.heappush(min_heap,(weight,neighbor,node))
+    return mst
+
+graph={}
+num_edges=int(input("Enter the number of edges: "))
+for _ in range(num_edges):
+    u,v,w=input("Enter edge(start,end,weight) separted by space: ").split()
+    w=int(w)
+
+    if u not in graph:
+        graph[u]=[]
+    if v not in graph:
+        graph[v]=[]
+        
+    graph[u].append((v,w))
+    graph[v].append((u,w))
+
+mst=prim_mst(graph)
+
+print("\nMinimum spanning tree: ")
+for edge in mst:
+    print(edge)

@@ -1,0 +1,46 @@
+class GraphColoring:
+    def __init__(self,graph,num_colors):
+        self.graph=graph
+        self.num_colors=num_colors
+        self.num_vertices=len(graph)
+        self.colors=[0]*num_vertices
+
+    def is_safe(self,vertex,color):
+        for neighbor in range(self.num_vertices):
+            if self.graph[vertex][neighbor]==1 and self.colors[neighbor]==color:
+                return False
+        return True
+
+    def solve_coloring(self,vertex=0):
+        if vertex==self.num_vertices:
+            return True
+        
+        for color in range(1,self.num_colors+1):
+            if self.is_safe(vertex,color):
+                self.colors[vertex]=color
+                if self.solve_coloring(vertex+1):
+                    return True
+                self.colors[vertex]=0
+        return False
+
+    def print_solution(self):
+        print("vertex color assignment: ")
+        for vertex in range(self.num_vertices):
+            print(f"vertex {vertex}->colors{self.colors[vertex]}")
+
+if __name__=="__main__":
+    num_vertices=int(input("Enter the number of vertices: "))
+    print("Enter the adjacency matrix row by row: ")
+    graph=[]
+    for i in range(num_vertices):
+        row=list(map(int,input().split()))
+        graph.append(row)
+
+    num_colors=int(input("Enter the number of colors: "))
+
+    coloring_problem=GraphColoring(graph,num_colors)
+
+    if coloring_problem.solve_coloring():
+        coloring_problem.print_solution()
+    else:
+        print("No solution exists.")

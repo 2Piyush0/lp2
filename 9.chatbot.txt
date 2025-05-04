@@ -1,0 +1,58 @@
+import random
+
+responses = {
+    "greeting": ["Hello! Welcome to our store chatbot.", "Hi there! How can I assist you today?"],
+    "how are you": ["I'm just a bot, but I'm here to help!", "Doing great! How can I support you today?"],
+    "price": ["Our prices vary by product. Could you tell me what product you're interested in?"],
+    "return policy": ["You can return a product within 7 days of delivery. Just go to 'My Orders' > 'Return'."],
+    "delivery": ["We offer free delivery for orders above ₹500. Standard delivery time is 3–5 days."],
+    "support": ["You can reach our support team at support@example.com or call 1800-123-456."],
+    "thank you": ["You're welcome!", "Happy to help!", "Anytime!"],
+    "bye": ["Goodbye! Have a wonderful day!", "Thanks for chatting with us! See you again!"]
+}
+
+keywords = {
+    "hello": "greeting",
+    "hi": "greeting",
+    "how are you": "how are you",
+    "price": "price",
+    "cost": "price",
+    "return": "return policy",
+    "refund": "return policy",
+    "delivery": "delivery",
+    "shipping": "delivery",
+    "support": "support",
+    "help": "support",
+    "thank": "thank you",
+    "bye": "bye"
+}
+
+def chatbot_response(user_input):
+    user_input = user_input.lower()
+    responses_to_return = []  
+
+    for word in keywords:
+        if word in user_input:
+            category = keywords[word]
+            responses_to_return.append(random.choice(responses[category]))  # Collect response
+            
+    if responses_to_return:
+        return " ".join(responses_to_return)
+    else:
+        return "I'm sorry, I didn't understand that. Could you please rephrase?"
+
+def main():
+    print("Welcome to ShopBot - Your Shopping Assistant!")
+    print("Type your question or type 'bye' to exit.")
+    print("-" * 50)
+
+    while True:
+        user_input = input("You: ")
+        if user_input.strip().lower() == "bye":
+            print("ShopBot:", random.choice(responses["bye"]))
+            break
+        response = chatbot_response(user_input)
+        print("ShopBot:", response)
+
+if __name__ == "__main__":
+    main()
